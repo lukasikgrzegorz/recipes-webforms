@@ -3,6 +3,8 @@ using System.Collections.Generic;
 using System.IO;
 using System.Net;
 using Newtonsoft.Json;
+using System.Web.UI.WebControls;
+using System.Web.UI;
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -32,9 +34,19 @@ public partial class _Default : System.Web.UI.Page
                         List<Recipe> recipes = mealApiResponse.Meals;
 
                         result.Text = "";
+
                         foreach (Recipe recipe in recipes)
                         {
-                            result.Text += recipe.StrMeal + "<br/>";
+                            // Tworzenie linka do przepisu
+                            HyperLink recipeHyperlink = new HyperLink();
+                            recipeHyperlink.NavigateUrl = "RecipePage.aspx?recipeId=" + recipe.IdMeal;
+                            recipeHyperlink.Text = recipe.StrMeal;
+
+                            // Dodawanie linka do strony
+                            result.Controls.Add(recipeHyperlink);
+
+                            // Dodawanie separatora
+                            result.Controls.Add(new LiteralControl("<br/>"));
                         }
                     }
                 }
@@ -45,13 +57,13 @@ public partial class _Default : System.Web.UI.Page
             result.Text = "Wystąpił błąd: " + ex.Message;
         }
     }
+
 }
 
 public class Recipe
 {
     public string IdMeal { get; set; }
     public string StrMeal { get; set; }
-    // Dodaj inne właściwości z odpowiedzi JSON, jeśli są potrzebne
 }
 
 public class MealApiResponse

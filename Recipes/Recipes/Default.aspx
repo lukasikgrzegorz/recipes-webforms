@@ -13,6 +13,7 @@
             <asp:TextBox ID="recipe_query" runat="server"></asp:TextBox>
             <asp:Button ID="button"  runat="server" Text="Search" OnClick="Search_Recipes" />
             <asp:Label ID="result" runat="server" Text=""></asp:Label>
+            <asp:HyperLink ID="recipeLink" runat="server" Text="" Target="_blank"></asp:HyperLink>
         </div>
     </form>
 </body>
