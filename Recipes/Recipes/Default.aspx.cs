@@ -5,6 +5,7 @@ using System.Net;
 using Newtonsoft.Json;
 using System.Web.UI.WebControls;
 using System.Web.UI;
+using System.Web.UI.HtmlControls;
 
 public partial class _Default : System.Web.UI.Page
 {
@@ -33,23 +34,39 @@ public partial class _Default : System.Web.UI.Page
 
                         List<Recipe> recipes = mealApiResponse.Meals;
 
-                        result.Text = "";
+                        result.Controls.Clear(); // Wyczyść istniejące kontrolki przed dodaniem nowych
 
                         if (recipes != null && recipes.Count > 0)
                         {
                             foreach (Recipe recipe in recipes)
                             {
-                                // Tworzenie linka do przepisu
+                                // Tworzenie linku do przepisu
                                 HyperLink recipeHyperlink = new HyperLink();
                                 recipeHyperlink.NavigateUrl = "RecipePage.aspx?recipeId=" + recipe.IdMeal;
-                                recipeHyperlink.Text = recipe.StrMeal;
-                                recipeHyperlink.Text += "<img src=\"" + (recipe.StrMealThumb ?? "") + "\" alt=\"" + (recipe.StrMeal ?? "") + "\" /><br/>";
 
-                                // Dodawanie linka do strony
+                                // Tworzenie kontenera <div> dla obrazka i labelki
+                                HtmlGenericControl divContainer = new HtmlGenericControl("div");
+                                divContainer.Attributes["class"] = "recipe-container";
+
+                                // Dodawanie obrazka przepisu
+                                Image recipeImage = new Image();
+                                recipeImage.ImageUrl = recipe.StrMealThumb ?? "placeholder.jpg";
+                                recipeImage.AlternateText = recipe.StrMeal;
+                                recipeImage.CssClass = "result-img";
+
+                                // Dodawanie labelki
+                                Label titleLabel = new Label();
+                                titleLabel.Text = recipe.StrMeal;
+
+                                // Dodaj obrazek i labelkę do kontenera
+                                divContainer.Controls.Add(recipeImage);
+                                divContainer.Controls.Add(titleLabel);
+
+                                // Dodaj kontener do linku
+                                recipeHyperlink.Controls.Add(divContainer);
+                                recipeHyperlink.CssClass = "result-item";
+
                                 result.Controls.Add(recipeHyperlink);
-
-                                // Dodawanie separatora
-                                result.Controls.Add(new LiteralControl("<br/>"));
                             }
                         }
                         else
