@@ -13,9 +13,17 @@
 </head>
 <body>
     <form id="form1" runat="server">
-        <div>
-            <h1>Recipe Details</h1>
-            <asp:Label ID="recipeDetailsLabel" runat="server" Text=""></asp:Label> 
+        <div class="container-style column">
+            <div class="wrapper">
+                <asp:Label ID="recipeName" runat="server" Text="" CssClass="recipe-name"></asp:Label> 
+                <asp:Label ID="recipeCategory" runat="server" Text="" CssClass="recipe-category"></asp:Label> 
+                <asp:Label ID="recipeArea" runat="server" Text="" CssClass="recipe-area"></asp:Label> 
+                <asp:Image ID="mealImage" runat="server" CssClass="recipe-img" />
+                <asp:Label ID="recipeIng" runat="server" Text="" CssClass="recipe-ing"></asp:Label> 
+            </div>
+            <div class="wrapper">
+                <asp:Label ID="recipeDetailsLabel" runat="server" Text=""></asp:Label> 
+            </div>
         </div>
     </form>
 </body>
